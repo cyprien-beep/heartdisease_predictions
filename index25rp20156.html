@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Heart Disease Risk Prediction</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background:#f4f6f8;
+    margin:0;
+    padding:0;
+}
+
+.container {
+    max-width:750px;
+    background:#fff;
+    padding:25px;
+    margin:30px auto;
+    border-radius:10px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.1);
+}
+
+h2 {
+    text-align:center;
+    margin-bottom:20px;
+}
+
+label {
+    font-weight:bold;
+    margin-top:12px;
+    display:block;
+}
+
+input, select {
+    width:100%;
+    padding:9px;
+    margin-top:5px;
+    border-radius:5px;
+    border:1px solid #ccc;
+}
+
+button {
+    width:100%;
+    background:#2563eb;
+    color:white;
+    padding:14px;
+    border:none;
+    border-radius:6px;
+    margin-top:25px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover {
+    background:#1d4ed8;
+}
+
+/* ================= RESULTS ================= */
+
+.result-card {
+    margin-top:30px;
+    padding:25px;
+    border-radius:12px;
+    animation:fadeIn 0.4s ease-in-out;
+    color:#fff;
+}
+
+.prediction-text {
+    font-size:1.6rem;
+    font-weight:bold;
+    text-align:center;
+    margin-bottom:15px;
+}
+
+/* ================= PROBABILITIES ================= */
+
+.probabilities {
+    margin-top:15px;
+}
+
+.prob-row {
+    margin-bottom:12px;
+}
+
+.progress {
+    background:rgba(255,255,255,0.35);
+    border-radius:8px;
+    overflow:hidden;
+}
+
+.progress-bar {
+    height:28px;
+    line-height:28px;
+    padding-right:8px;
+    text-align:right;
+    font-size:0.9rem;
+    font-weight:bold;
+    color:#fff;
+    width:0;
+    transition:width 0.6s ease;
+}
+
+/* ================= ENTERED DATA ================= */
+
+.entered-data {
+    margin-top:20px;
+    padding:10px;
+    border-radius:8px;
+    background:#833cb6;
+}
+
+.entered-data table {
+    width:100%;
+    border-collapse:collapse;
+}
+
+.entered-data th, .entered-data td {
+    border:1px solid #ccc;
+    padding:8px;
+    text-align:left;
+}
+
+.entered-data th {
+    background:#aed4ea;
+}
+
+/* ================= PREDICTED ROW ONLY ================= */
+
+.predicted-row td {
+    font-weight:bold;
+    color:#d6e3ed;
+    text-align:center;
+}
+
+/* Risk colors (ONLY predicted row & card) */
+.no-disease { background-color:#22c55e; }
+.very-mild { background-color:#a3e635; color:#14532d; }
+.mild { background-color:#facc15; color:#78350f; }
+.severe { background-color:#f97316; }
+.immediate-danger { background-color:#ef4444; }
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width:768px){
+    .container{margin:15px; padding:18px;}
+    .prediction-text{font-size:1.3rem;}
+}
+
+@keyframes fadeIn {
+    from {opacity:0; transform:translateY(10px);}
+    to {opacity:1; transform:translateY(0);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>Heart Disease Risk Prediction</h2>
+
+<form action="/predict" method="post">
+    <label>Age</label>
+    <input type="number" name="age" required>
+
+    <label>Sex</label>
+    <select name="sex" required>
+        <option value="">Select</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+    </select>
+
+    <label>Chest Pain Type</label>
+    <select name="cp" required>
+        <option value="">Select</option>
+        <option value="Typical Angina">Typical Angina</option>
+        <option value="Atypical Angina">Atypical Angina</option>
+        <option value="Non-Anginal Pain">Non-Anginal Pain</option>
+        <option value="Asymptomatic">Asymptomatic</option>
+    </select>
+
+    <label>Resting Blood Pressure</label>
+    <input type="number" name="trestbps" required>
+
+    <label>Cholesterol</label>
+    <input type="number" name="chol" required>
+
+    <label>Fasting Blood Sugar</label>
+    <select name="fbs" required>
+        <option value="">Select</option>
+        <option value="True">True</option>
+        <option value="False">False</option>
+    </select>
+
+    <label>Resting ECG</label>
+    <select name="restecg" required>
+        <option value="">Select</option>
+        <option value="Normal">Normal</option>
+        <option value="ST-T Wave Abnormality">ST-T Wave Abnormality</option>
+        <option value="Left Ventricular Hypertrophy">Left Ventricular Hypertrophy</option>
+    </select>
+
+    <label>Max Heart Rate</label>
+    <input type="number" name="thalach" required>
+
+    <label>Exercise Induced Angina</label>
+    <select name="exang" required>
+        <option value="">Select</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+    </select>
+
+    <label>Oldpeak</label>
+    <input type="number" step="0.1" name="oldpeak" required>
+
+    <label>Slope</label>
+    <select name="slope" required>
+        <option value="">Select</option>
+        <option value="Upsloping">Upsloping</option>
+        <option value="Flat">Flat</option>
+        <option value="Downsloping">Downsloping</option>
+    </select>
+
+    <label>Number of Major Vessels</label>
+    <select name="ca" required>
+        <option value="">Select</option>
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+    </select>
+
+    <label>Thalassemia</label>
+    <select name="thal" required>
+        <option value="">Select</option>
+        <option value="Normal">Normal</option>
+        <option value="Fixed defect">Fixed defect</option>
+        <option value="Reversible defect">Reversible defect</option>
+    </select>
+
+    <button type="submit">Predict Risk</button>
+</form>
+
+{% if prediction %}
+<div class="result-card {{ prediction_class }}">
+    <div class="prediction-text">{{ prediction }}</div>
+
+    <h4>Probability Distribution</h4>
+    <div class="probabilities">
+        {% for cls, prob in probabilities|dictsort(false, by='value')|reverse %}
+        <div class="prob-row">
+            <strong>{{ cls }}</strong>
+            <div class="progress">
+                <div class="progress-bar {{ cls | lower | replace(' ', '-') }}"
+                     data-prob="{{ prob }}">
+                    {{ prob }}%
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if entered_data %}
+    <div class="entered-data">
+        <h4>Entered Data & Predicted Class</h4>
+        <table>
+            <thead>
+                <tr><th>Feature</th><th>Value</th></tr>
+            </thead>
+            <tbody>
+                {% for key, value in entered_data.items() %}
+                <tr>
+                    <td>{{ key | capitalize }}</td>
+                    <td>{{ value }}</td>
+                </tr>
+                {% endfor %}
+                <tr class="predicted-row {{ prediction_class }}">
+                    <td><strong>Predicted Class</strong></td>
+                    <td>{{ prediction }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+
+</div>
+
+<script>
+document.querySelectorAll('.progress-bar').forEach(bar => {
+    const prob = bar.getAttribute('data-prob');
+    bar.style.width = '0';
+    setTimeout(() => bar.style.width = prob + '%', 100);
+});
+</script>
+
+</body>
+</html>
