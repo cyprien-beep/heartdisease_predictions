@@ -1,0 +1,4 @@
+Patient,Predicted Class,No Disease (%),Immediate Danger (%),Severe (%),Mild (%),Very Mild (%)
+Patient 1,No Disease,48.0,32.0,3.0,15.0,2.0
+Patient 2,Mild,8.0,44.0,3.0,45.0,0.0
+Patient 3,Immediate Danger,28.0,65.0,0.0,6.0,1.0

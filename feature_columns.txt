@@ -1,0 +1,18 @@
+age
+trestbps
+chol
+thalach
+oldpeak
+ca
+sex_Male
+cp_Atypical Angina
+cp_Non-Anginal Pain
+cp_Typical Angina
+fbs_True
+restecg_Normal
+restecg_ST-T abnormality
+exang_Yes
+slope_Flat
+slope_Upsloping
+thal_Normal
+thal_Reversible defect
