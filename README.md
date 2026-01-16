@@ -52,5 +52,7 @@ python -m venv ILTML_801_S_A_25RP20156
 ## Author
 
 Cyprien NZAYISENGA
-Industrial Attachment Project – ICT Field
+Machine learning summative assessment
+
 RP-HUYE College, Rwanda
+
